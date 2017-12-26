@@ -14,6 +14,7 @@ Including the following content:
 
 ## Logistic Regression
 
-## Scikit-learn Reali
+## Scikit-learn Realization
+*  linear regression
 
 
