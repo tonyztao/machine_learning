@@ -30,6 +30,8 @@ print (linreg.intercept_)
 #特征的参数
 print (linreg.coef_) 
 
+
+#拟合曲线
 yhat = linreg.intercept_ + linreg.coef_*X_train
 
 LR_fig = plt.figure()
