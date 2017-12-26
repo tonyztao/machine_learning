@@ -12,6 +12,7 @@ import matplotlib.ticker as mtick
 from time import sleep
 import copy
 
+# parameter
 plt.rcParams['animation.ffmpeg_path'] = 'C://Program Files//ffmpeg//bin//ffmpeg.exe'
 plt.rcParams['animation.convert_path'] = 'C:\Program Files\ImageMagick-7.0.7-Q16\convert.exe' 
 
@@ -103,7 +104,7 @@ class LinearRegression:
                         return self.theta
                         break
 
-        return self.theta,history_theta
+        return self.theta,history_theta 
 
     def predict(self, X):
         """
