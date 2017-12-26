@@ -12,4 +12,8 @@ Including the following content:
 
 *  [Linear Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Linear_Regression.py/)
 
+## Logistic Regression
+
+## Scikit-learn Reali
+
 
