@@ -2,12 +2,13 @@ from sklearn import datasets, linear_model
 from sklearn.cross_validation import train_test_split  
 from sklearn import metrics
 import numpy as np
+import matplotlib.pyplot as plt
 
 def feature_scaling(X, axis=0):
     new = X - np.mean(X, axis=0)
     return new / np.std(new, axis=0)  
 
-# reading data and use one feature at first 
+# reading data
 diabetes = datasets.load_diabetes()
 diabetes_X = diabetes.data[:, np.newaxis, 2]
 diabetes_Y = diabetes.target
@@ -28,6 +29,18 @@ linreg.fit(X_train, y_train)
 print (linreg.intercept_)
 #特征的参数
 print (linreg.coef_) 
+
+yhat = linreg.intercept_ + linreg.coef_*X_train
+
+LR_fig = plt.figure()
+ax = LR_fig.add_subplot(111)
+ax.plot(X_train, y_train, 'ro')
+ax.plot(X_train, yhat, 'm', lw=1.0, label='fitting Curve')
+ax.legend(loc='upper left')
+plt.title('Linear Regression')
+# plt.grid(True)
+plt.show()
+
 
 #模型拟合测试集
 y_pred = linreg.predict(X_test)
