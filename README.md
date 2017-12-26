@@ -10,6 +10,6 @@ Including the following content:
 5. fitting Curve figure and gif:the regression process
 6. evaluation the performance:MSE
 
-*   Green [Linear Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Linear_Regression.py/)
+*  [Linear Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Linear_Regression.py/)
 
 
