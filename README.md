@@ -16,5 +16,6 @@ Including the following content:
 
 ## Scikit-learn Realization
 *  linear regression
+* [Linear Regression Sklearn Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Siciket_learn_LR.py)
 
 
