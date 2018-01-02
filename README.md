@@ -11,6 +11,7 @@ Including the following content:
 6. evaluation the performance:MSE
 
 *  [Linear Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Linear_Regression.py/)
+*  [Least Square Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Least_Square_LR.py)
 
 ## Logistic Regression
 
