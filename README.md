@@ -10,7 +10,7 @@
 5. 拟合曲线：展现训练拟合过程，直观感受
 6. 评估模型:MSE均方误差，或者计算预测值和真实值之间的相关性
 7. 演化的线性回归方法：ridge回归（L2 penalty）和lasso回归（L1 penalty）
-\\(x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\\)
+$$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$
 
 *  [Linear Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Linear_Regression.py/)
 *  [Least Square Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Least_Square_LR.py)
