@@ -9,7 +9,7 @@
 4. 正则化 :防止过拟合
 5. 拟合曲线：展现训练拟合过程，直观感受
 6. 评估模型:MSE均方误差，或者计算预测值和真实值之间的相关性
-7. 其他的线性回归方法：ridge回归（L2 penalty）和lasso回归（L1 penalty），引入其他线性回归算法，因为Linear regression一般只对low dimension适用，而且变量间还不存在multicolinearity.
+7. 其他的线性回归方法：ridge回归（L2 penalty）和lasso回归（L1 penalty），引入其他线性回归算法，因为Linear regression一般只对low dimension适用，而且变量间还不存在multicolinearity。多重共线性时表明变量间存在相关性，$\mathbf{X}^\mathrm{T}\mathbf{X}$不可逆。
 
       -ridge回归（L2 penalty）
       -lasso回归（L1 penalty）
