@@ -11,9 +11,8 @@
 6. 评估模型:MSE均方误差，或者计算预测值和真实值之间的相关性
 7. 其他的线性回归方法：ridge回归（L2 penalty）和lasso回归（L1 penalty），引入其他线性回归算法，因为Linear regression一般只对low dimension适用，而且变量间还不存在multicolinearity.
 
-     -ridge回归（L2 penalty）
-    
-     -lasso回归（L1 penalty）
+      -ridge回归（L2 penalty）
+      -lasso回归（L1 penalty）
 
 $$x=\frac{-b\pm\sqrt{b^2\pm-4ac}}{2a}$$
 
