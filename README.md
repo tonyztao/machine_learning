@@ -25,7 +25,7 @@
 
 *  [Linear Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Linear_Regression.py/)
 * [Least Square Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Least_Square_LR.py)
-*  [Ridge Regression Code]()
+* [Ridge Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/ridge_regresion.py)
 ## Logistic Regression
 
 ## Scikit-learn Realization
