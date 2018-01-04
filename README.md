@@ -15,15 +15,17 @@
       公式如下：
       $$x=\frac{1}{2m}\left[\sum_{i=1}^m\left(h_{\theta}\left(x^{i}\right)-y^{i}\right)^{2}+\lambda\sum_{j=1}^n\theta_{j}^2\right]$$
       1. 岭回归可以解决特征数量比样本量多的问题
-      2. 岭回归作为一种缩减算法可以判断哪些特征重要或者不重要，有点类似于降维的效果
-      3. 缩减算法可以看作是对一个模型增加偏差的同时减少方差
-      
+      2. 使用岭回归和缩减技术，首先需要对特征作标准化处理，使得每个特征具有相同的重要性，这样才能从得到的系数中反应各个参数的重要程度
+      3. 岭回归作为一种缩减算法可以判断哪些特征重要或者不重要，有点类似于降维的效果
+      4. 缩减算法可以看作是对一个模型增加偏差的同时减少方差，也就是减少过拟合的程度，更具有泛化的表现
+      5. 岭回归中另外一个关键是参数$\lamba$的选取，一般是等间隔选取多个$\lamba$选择最优表现的值
+            
       -lasso回归（L1 penalty）
 
 
 *  [Linear Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Linear_Regression.py/)
-*  [Least Square Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Least_Square_LR.py)
-
+* [Least Square Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Least_Square_LR.py)
+*  [Ridge Regression Code]()
 ## Logistic Regression
 
 ## Scikit-learn Realization
