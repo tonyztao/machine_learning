@@ -60,7 +60,7 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
     最后还有一点，我们之前在谈线性回归时讲到的特征缩放，我们看到了特征缩放是如何提高梯度下降的收敛速度的，这个特征缩放的方法，也适用于逻辑回归
   
   5. 实现代码：
-  * [Logistic Regression Code]()
+* [Logistic Regression Code]()
 		
 
 
