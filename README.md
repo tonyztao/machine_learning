@@ -55,6 +55,13 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
   $$Cost\left(h_{\theta}\left(x\right),y\right)=\left\{\begin{aligned} 
 		-log\left(h_{\theta}\left(x\right)\right)& \text(y=1)\\
 		-log(1-h_{\theta}\left(x\right))& \text(y=0)\end{aligned}\right$$
+		$$f(x)=\left\{
+\begin{aligned}
+x & = & \cos(t) \\
+y & = & \sin(t) \\
+z & = & \frac xy
+\end{aligned}
+\right$$
 		
 
 
