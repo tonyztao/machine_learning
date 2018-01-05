@@ -44,8 +44,7 @@
 2. 构造预测函数$h_{\theta}\left(X\right)$：  
 逻辑回归的输入是一个线性组合，与线性回归一样，但输出变成了概率，通过引入Logit函数将结果输出在范围$\left(0,1\right)$，这样的话使得结果更容易被解释，通过概率来判断属于哪一个类别。
 逻辑回归模型的假设是：$h_{\theta}=g\left(\theta^TX\right)$  其中:$X$代表特征向量,$g$代表逻辑函数（logistic function)是一个常用的逻辑函数为S形函数（Sigmoid function），公式为：$g\left(z\right)=\frac{1}{1+e^{-z}}$  
-<div align=center>
-	![Sigmoid ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/sigmoid%E5%87%BD%E6%95%B0.png)  
+![Sigmoid ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/sigmoid%E5%87%BD%E6%95%B0.png)  
 我们可以看到，sigmoid的函数输出是介于（0，1）之间的，中间值是0.5，于是之前的公式 $h_{\theta}\left(X\right)$ 的含义就很好理解了，因为 $h_{\theta}\left(X\right)$ 输出是介于（0，1）之间，也就表明了数据属于某一类别的概率，例如 :  
 $h_{\theta}\left(X\right)<0.5$则说明当前数据属于A类；     
 $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。  
@@ -53,7 +52,6 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
 
 3. 构造损失函数$J\left(\theta\right)$： 
  J函数如下，它们是基于最大似然估计推导得到的，具体推导过程略。 
- <div align=center>
  ![损失函数 ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%85%AC%E5%BC%8F.png)  
  4. 求最小的参数$\min\limits_{\theta}J$：  
   在得到代价函数以后，就可以用梯度下降算法来求得能使代价函数最小的参数了。算法为：  
