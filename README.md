@@ -52,15 +52,7 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
 
 3. 构造损失函数$J_{\theta}\left(X\right)$：  
  Cost函数和J函数如下，它们是基于最大似然估计推导得到的，具体推导过程略。  
-\begin{equation}  
-\left\{  
-             \begin{array}{lr}  
-             x=\dfrac{3\pi}{2}(1+2t)\cos(\dfrac{3\pi}{2}(1+2t)), &  \\  
-             y=s, & 0\leq s\leq L,|t|\leq1.\\  
-             z=\dfrac{3\pi}{2}(1+2t)\sin(\dfrac{3\pi}{2}(1+2t)), &    
-             \end{array}  
-\right.  
-\end{equation}  
+\begin{equation} \left\{\begin{array}{lr} x=\dfrac{3\pi}{2}(1+2t)\cos(\dfrac{3\pi}{2}(1+2t)), &  \\  y=s, & 0\leq s\leq L,|t|\leq1.\\  z=\dfrac{3\pi}{2}(1+2t)\sin(\dfrac{3\pi}{2}(1+2t)), &    \end{array}  \right.  \end{equation}  
 		
 
 
