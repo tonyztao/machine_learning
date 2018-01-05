@@ -34,6 +34,12 @@
 * [Least Square Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/Least_Square_LR.py)
 * [Ridge Regression Code](https://github.com/tonyztao/machine_learning/blob/master/linear_regression/Linear%20Regression/ridge_regresion.py)
 ## Logistic Regression
+本节介绍逻辑回归算法， 这是最流行最广泛使用的一种学习算法，是一种分类算法。
+主要包含如下关键点:
+1. 主要原理：
+逻辑回归的输入是一个线性组合，与线性回归一样，但输出变成了概率，通过引入Logit函数将结果输出在范围$\left(0,1\right)$
+
+
 
 ## Scikit-learn Realization
 *  linear regression
