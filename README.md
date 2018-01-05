@@ -21,9 +21,8 @@
       4. 缩减算法可以看作是对一个模型增加偏差的同时减少方差，也就是减少过拟合的程度，更具有泛化的表现
       5. 岭回归中另外一个关键是参数$\lambda$的选取，一般是等间隔选取多个$\lambda$选择最优表现的值
       6. 为了定量的找到最佳参数值，需要通过交叉验证的方式得到最佳的$\lambda$
-      
-     
-     -lasso回归（L1 penalty）
+    
+    -lasso回归（L1 penalty）
       
       公式如下：
       $$x=\frac{1}{2m}\left[\sum_{i=1}^m\left(h_{\theta}\left(x^{i}\right)-y^{i}\right)^{2}+\lambda\sum_{j=1}^n\left|\theta_{j}\right|\right]$$
