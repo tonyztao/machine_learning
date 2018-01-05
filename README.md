@@ -47,8 +47,8 @@
 ![Sigmoid ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/sigmoid%E5%87%BD%E6%95%B0.png)  
 我们可以看到，sigmoid的函数输出是介于（0，1）之间的，中间值是0.5，于是之前的公式 $h_{\theta}\left(X\right)$ 的含义就很好理解了，因为 $h_{\theta}\left(X\right)$ 输出是介于（0，1）之间，也就表明了数据属于某一类别的概率，例如 :  
 $h_{\theta}\left(X\right)<0.5$则说明当前数据属于A类；     
-$h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。  
-构造的预测函数为：$h_{\theta}\left(X\right)=g\left(\theta^TX\right)=\frac{1}{1+e^{-\theta^TX}}$
+$h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。  
+ 构造的预测函数为：$h_{\theta}\left(X\right)=g\left(\theta^TX\right)=\frac{1}{1+e^{-\theta^T}X}$
 
 3. 构造损失函数$J_{\theta}\left(X\right)$：
 
