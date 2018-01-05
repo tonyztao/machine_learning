@@ -50,8 +50,12 @@ $h_{\theta}\left(X\right)<0.5$则说明当前数据属于A类；
 $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。  
  构造的预测函数为：$h_{\theta}\left(X\right)=g\left(\theta^TX\right)=\frac{1}{1+e^{-\theta^T}X}$
 
-3. 构造损失函数$J_{\theta}\left(X\right)$：
-
+3. 构造损失函数$J_{\theta}\left(X\right)$：  
+ Cost函数和J函数如下，它们是基于最大似然估计推导得到的，具体推导过程略。  
+  $$Cost\left(h_{\theta}\left(x\right),y\right)=\begin{cases} 
+		-log\left(h_{\theta}\left(x\right)\right), & if y=1\\ 
+		-log(1-h_{\theta}\left(x\right)), & other\ if y=1 
+	\end{cases}
 
 
 ## Scikit-learn Realization
