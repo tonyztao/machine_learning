@@ -56,7 +56,7 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
  ![损失函数 ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%85%AC%E5%BC%8F.png)  
  4. 求最小的参数$\min\limits_{\theta}J$：  
   在得到代价函数以后，就可以用梯度下降算法来求得能使代价函数最小的参数了。算法为：  
-   ![梯度下降算法 ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.png)
+   ![梯度下降算法 ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.png)  
     最后还有一点，我们之前在谈线性回归时讲到的特征缩放，我们看到了特征缩放是如何提高梯度下降的收敛速度的，这个特征缩放的方法，也适用于逻辑回归
 		
 
