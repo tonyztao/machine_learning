@@ -38,7 +38,7 @@
 主要包含如下关键点:
 1. 主要原理：  
 逻辑回归的输入是一个线性组合，与线性回归一样，但输出变成了概率，通过引入Logit函数将结果输出在范围$\left(0,1\right)$  
-逻辑回归模型的假设是：$h_{\theta}=g\left(\theta^TX\right)$  其中：  代表特征向量  代表逻辑函数（logistic function)是一个常用的逻辑函数为S形函数（Sigmoid function），公式为： 。
+逻辑回归模型的假设是：$h_{\theta}=g\left(\theta^TX\right)$  其中:$X$代表特征向量,$g$代表逻辑函数（logistic function)是一个常用的逻辑函数为S形函数（Sigmoid function），公式为：$g\left(z\right)=frac{1}{1+e^-z}$ 。
 
 
 
