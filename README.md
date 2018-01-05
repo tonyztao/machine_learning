@@ -58,8 +58,7 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
 		
 		$$\left\{\begin{array}{cc} 
 		1, & x=f(Pa_{x})\\ 
-		0, & other\ values 
-	\end{array}\right.$$
+		0, & other\ values \end{array}\right.$$
 		
 
 
