@@ -53,7 +53,7 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
 3. 构造损失函数$J\left(\theta\right)$： 
  J函数如下，它们是基于最大似然估计推导得到的，具体推导过程略。 
  ![损失函数 ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%85%AC%E5%BC%8F.png)  
- 4. 求最小的参数$\min_limits_{\theta}J$：  
+ 4. 求最小的参数$\min\limits_{\theta}J$：  
  
  地方
 
