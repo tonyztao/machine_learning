@@ -51,8 +51,9 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
  构造的预测函数为：$h_{\theta}\left(X\right)=g\left(\theta^TX\right)=\frac{1}{1+e^{-\theta^T}X}$
 
 3. 构造损失函数$J_{\theta}\left(X\right)$：  
- Cost函数和J函数如下，它们是基于最大似然估计推导得到的，具体推导过程略。  
-\begin{equation}\left\{\begin{array}{lr} x=\dfrac{3\pi}{2}(1+2t)\cos(\dfrac{3\pi}{2}(1+2t)), &  \\  y=s, & 0\leq s\leq L,|t|\leq1.\\  z=\dfrac{3\pi}{2}(1+2t)\sin(\dfrac{3\pi}{2}(1+2t)), &    \end{array}  \right.  \end{equation}  
+ J函数如下，它们是基于最大似然估计推导得到的，具体推导过程略。 
+ ![损失函数 ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%85%AC%E5%BC%8F.png)
+
 		
 
 
