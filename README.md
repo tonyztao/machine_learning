@@ -40,6 +40,9 @@
 逻辑回归的输入是一个线性组合，与线性回归一样，但输出变成了概率，通过引入Logit函数将结果输出在范围$\left(0,1\right)$  
 逻辑回归模型的假设是：$h_{\theta}=g\left(\theta^TX\right)$  其中:$X$代表特征向量,$g$代表逻辑函数（logistic function)是一个常用的逻辑函数为S形函数（Sigmoid function），公式为：$g\left(z\right)=\frac{1}{1+e^{-z}}$     
 ![Sigmoid ](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/sigmoid%E5%87%BD%E6%95%B0.png)  
+我们可以看到，sigmoid的函数输出是介于（0，1）之间的，中间值是0.5，于是之前的公式 $h_{\theta}left(X\right)$ 的含义就很好理解了，因为 $h_{\theta}left(X\right)$ 输出是介于（0，1）之间，也就表明了数据属于某一类别的概率，例如 ： 
+$h_{\theta}left(X\right)<0.5$则说明当前数据属于A类； 
+$h_{\theta}left(X\right)>0.5$ 则说明当前数据属于B类。 
   -损失函数
 
 
