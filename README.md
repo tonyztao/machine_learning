@@ -61,7 +61,6 @@ $h_{\theta}\left(X\right)>0.5$ 则说明当前数据属于B类。
   5. 实现代码：
 * [Logistic Regression Code](https://github.com/tonyztao/machine_learning/blob/master/logistic_regression/Logistic_Regression.py)  
 代码实现关键点如下：  
-
       - 示例中的数据来源* [adult classification dataset](http://archive.ics.uci.edu/ml/datasets/Adult)    
       - 数据预处理：包括连续数据归一化，分类数据one-hot编码。通过pandas的get_dummies实现，要强调一点，生成m个虚拟变量后，只要引入m-1个虚拟变量到数据集中，未引入的一个是作为基准对比的，同时在样本中把要处理的特征列删除掉。  
       - 数据可视化：通过seaborn考察各特征与结果Y（0,1）的关系；考察变量间的相关性；  
