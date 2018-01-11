@@ -57,11 +57,13 @@ def main():
     #变量处理（特征离散化处理） 
     ################################################################################################################# 
     #1# 年龄 通过可视化选取最好的分界点 划分年龄区间
+    plt.figure(1)
     facet = sns.FacetGrid(adult_data_train_df, hue="income",aspect=4)
     facet.map(sns.kdeplot,'age',shade= True)
     facet.set(xlim=(0, adult_data_train_df['age'].max()))
     facet.add_legend()
-
+    
+    plt.figure(1)
     average_age = adult_data_train_df[["age", "income"]].groupby(['age'],as_index=False).mean()
     sns.barplot(x='age', y='income', data=average_age)
 
