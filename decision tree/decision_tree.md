@@ -29,7 +29,7 @@
  $$H=-\sum_{i=1}^np\left(x_{i}\right)\log_{2}p\left(x_{i}\right)$$
 
 条件熵：
- $$x=\frac{1}{2m}\left[\sum_{i=1}^m\left(h_{\theta}\left(x^{i}\right)-y^{i}\right)^{2}+\lambda\sum_{j=1}^n\theta_{j}^2\right]$$
+ $$H(Y|X)=\sum_{i=1}^np\left(X=x_{i}\right)H(Y |X=x_{i})$$
 
 #### 决策树三种方法
 * ID3算法
