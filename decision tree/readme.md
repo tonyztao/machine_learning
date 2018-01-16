@@ -80,5 +80,9 @@ GINI公式：
 #### 代码实现以及注意事项
 
 
+#### 参考文献
+! [决策树系列——CART](https://www.cnblogs.com/yonghao/p/5135386.html)
+
+
 
 
