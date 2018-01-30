@@ -1,241 +1,252 @@
 import numpy as np
-import pandas as pd
-from sklearn.linear_model import LogisticRegression
-from sklearn.cross_validation import train_test_split  
-from sklearn.cross_validation import  cross_val_score
-from sklearn import metrics
-from sklearn.metrics import roc_curve, auc  
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split 
 
-import seaborn as sns
-import matplotlib as mpl
-from matplotlib import pyplot as plt
+class DecisionTree:
+    """决策树使用方法：
+        - 生成实例： clf = DecisionTrees(). 参数mode可选，ID3或C4.5，默认C4.5
+        - 训练，调用fit方法： clf.fit(X,y).  X,y均为np.ndarray类型
+        - 预测，调用predict方法： clf.predict(X). X为np.ndarray类型
+        - 可视化决策树，调用showTree方法
+    """
+    def __init__(self,mode='C4.5'):
+        self._tree = None
+        if mode == 'C4.5' or mode == 'ID3':
+            self._mode = mode
+        else:
+            raise Exception('mode should be C4.5 or ID3')
 
-def feature_scaling(X, axis=0):
-    new = X - np.mean(X, axis=0)
-    return new / np.std(new, axis=0)    
 
 
-def main():
+    def _calcEntropy(self,y):
+        """
+        函数功能：计算熵
+        参数y：数据集的标签
+        """
+        num = y.shape[0]
+        #统计y中不同label值的个数，并用字典labelCounts存储
+        labelCounts = {}
+        for label in y:
+            if label not in labelCounts.keys(): labelCounts[label] = 0
+            labelCounts[label] += 1
+        #计算熵
+        entropy = 0.0
+        for key in labelCounts:
+            prob = float(labelCounts[key])/num
+            entropy -= prob * np.log2(prob)
+        return entropy
 
-# reading data and data preprocessing
-    adult_data_train_df = pd.read_csv(r'D:\git_repository\logistic_regression\adult_data_train_new.csv',names  =['age','workclass','fnlwgt','education','education-num','marital-status','occupation','relationship','race','sex','capital-gain','capital-loss','hours-per-week','native-country','income'])
-    adult_data_test_df  = pd.read_csv(r'D:\git_repository\logistic_regression\adult_data_test_new.csv',names  =['age','workclass','fnlwgt','education','education-num','marital-status','occupation','relationship','race','sex','capital-gain','capital-loss','hours-per-week','native-country','income'])
+
+
+    def _splitDataSet(self,X,y,index,value):
+        """
+        函数功能：返回数据集中特征下标为index，特征值等于value的子数据集
+        """
+        ret = []
+        featVec = X[:,index]
+        X = X[:,[i for i in range(X.shape[1]) if i!=index]]
+        for i in range(len(featVec)):
+            if featVec[i]==value:
+                ret.append(i)
+        return X[ret,:],y[ret]
+
+
+    def _chooseBestFeatureToSplit_ID3(self,X,y):
+        """ID3
+        函数功能：对输入的数据集，选择最佳分割特征
+        参数dataSet：数据集，最后一列为label
+        主要变量说明：
+                numFeatures：特征个数
+                oldEntropy：原始数据集的熵
+                newEntropy：按某个特征分割数据集后的熵
+                infoGain：信息增益
+                bestInfoGain：记录最大的信息增益
+                bestFeatureIndex：信息增益最大时，所选择的分割特征的下标
+        """
+        numFeatures = X.shape[1]
+        oldEntropy = self._calcEntropy(y)
+        bestInfoGain = 0.0
+        bestFeatureIndex = -1
+        #对每个特征都计算一下infoGain，并用bestInfoGain记录最大的那个
+        for i in range(numFeatures):
+            featList = X[:,i]
+            uniqueVals = set(featList)
+            newEntropy = 0.0
+            #对第i个特征的各个value，得到各个子数据集，计算各个子数据集的熵，
+            #进一步地可以计算得到根据第i个特征分割原始数据集后的熵newEntropy
+            for value in uniqueVals:
+                sub_X,sub_y = self._splitDataSet(X,y,i,value)
+                prob = len(sub_y)/float(len(y))
+                newEntropy += prob * self._calcEntropy(sub_y)
+            #计算信息增益，根据信息增益选择最佳分割特征
+            infoGain = oldEntropy - newEntropy
+            if (infoGain > bestInfoGain):
+                bestInfoGain = infoGain
+                bestFeatureIndex = i
+        return bestFeatureIndex
+
+    def _chooseBestFeatureToSplit_C45(self,X,y):
+        """C4.5
+            ID3算法计算的是信息增益，C4.5算法计算的是信息增益比，对上面ID3版本的函数稍作修改即可
+        """
+        numFeatures = X.shape[1]
+        oldEntropy = self._calcEntropy(y)
+        bestGainRatio = 0.0
+        bestFeatureIndex = -1
+        #对每个特征都计算一下gainRatio=infoGain/splitInformation
+        for i in range(numFeatures):
+            featList = X[:,i]
+            uniqueVals = set(featList)
+            newEntropy = 0.0
+            splitInformation = 0.0
+            #对第i个特征的各个value，得到各个子数据集，计算各个子数据集的熵，
+            #进一步地可以计算得到根据第i个特征分割原始数据集后的熵newEntropy
+            for value in uniqueVals:
+                sub_X,sub_y = self._splitDataSet(X,y,i,value)
+                prob = len(sub_y)/float(len(y))
+                newEntropy += prob * self._calcEntropy(sub_y)
+                splitInformation -= prob * np.log2(prob)
+            #计算信息增益比，根据信息增益比选择最佳分割特征
+            #splitInformation若为0，说明该特征的所有值都是相同的，显然不能作为分割特征
+            if splitInformation==0.0:
+                pass
+            else:
+                infoGain = oldEntropy - newEntropy
+                gainRatio = infoGain/splitInformation
+                if(gainRatio > bestGainRatio):
+                    bestGainRatio = gainRatio
+                    bestFeatureIndex = i
+        return bestFeatureIndex
+
+
+
+    def _majorityCnt(self,labelList):
+        """
+        函数功能：返回labelList中出现次数最多的label
+        """
+        labelCount={}
+        for vote in labelList:
+            if vote not in labelCount.keys(): labelCount[vote] = 0
+            labelCount[vote] += 1
+        sortedClassCount = sorted(labelCount.iteritems(),key=lambda x:x[1], reverse=True)
+        return sortedClassCount[0][0]
+
+
+
+    def _createTree(self,X,y,featureIndex):
+        """建立决策树
+        featureIndex，类型是元组，它记录了X中的特征在原始数据中对应的下标。
+        """
+        labelList = list(y)
+        #所有label都相同的话，则停止分割，返回该label
+        if labelList.count(labelList[0]) == len(labelList):
+            return labelList[0]
+        #没有特征可分割时，停止分割，返回出现次数最多的label
+        if len(featureIndex) == 0:
+            return self._majorityCnt(labelList)
+
+        #可以继续分割的话，确定最佳分割特征
+        if self._mode == 'C4.5':
+            bestFeatIndex = self._chooseBestFeatureToSplit_C45(X,y)
+        elif self._mode == 'ID3':
+            bestFeatIndex = self._chooseBestFeatureToSplit_ID3(X,y)
+
+        bestFeatStr = featureIndex[bestFeatIndex]
+        featureIndex = list(featureIndex)
+        featureIndex.remove(bestFeatStr)
+        featureIndex = tuple(featureIndex)
+        #用字典存储决策树。最佳分割特征作为key，而对应的键值仍然是一棵树（仍然用字典存储）
+        myTree = {bestFeatStr:{}}
+        featValues = X[:,bestFeatIndex]
+        uniqueVals = set(featValues)
+        for value in uniqueVals:
+            #对每个value递归地创建树
+            sub_X,sub_y = self._splitDataSet(X,y, bestFeatIndex, value)
+            myTree[bestFeatStr][value] = self._createTree(sub_X,sub_y,featureIndex)
+        return myTree
+
+    def fit(self,X,y):
+        #类型检查
+        if isinstance(X,np.ndarray) and isinstance(y,np.ndarray):
+            pass
+        else:
+            try:
+                X = np.array(X)
+                y = np.array(y)
+            except:
+                raise TypeError("numpy.ndarray required for X,y")
+
+        featureIndex = tuple(['x'+str(i) for i in range(X.shape[1])])
+        self._tree = self._createTree(X,y,featureIndex)
+        return self  #allow chaining: clf.fit().predict()
+
+
+
+    def predict(self,X):
+        if self._tree==None:
+            raise NotFittedError("Estimator not fitted, call `fit` first")
+
+        #类型检查
+        if isinstance(X,np.ndarray):
+            pass
+        else:
+            try:
+                X = np.array(X)
+            except:
+                raise TypeError("numpy.ndarray required for X")
+
+        def _classify(tree,sample):
+            """
+            用训练好的决策树对输入数据分类
+            决策树的构建是一个递归的过程，用决策树分类也是一个递归的过程
+            _classify()一次只能对一个样本（sample）分类
+            To Do: 多个sample的预测怎样并行化？
+            """
+            featIndex = list(tree.keys())[0]
+            secondDict = tree[featIndex]
+            key = sample[int(featIndex[1:])]
+            valueOfkey = secondDict[key]
+            if isinstance(valueOfkey, dict):
+                label = _classify(valueOfkey,sample)
+            else: label = valueOfkey
+            return label
+
+        if len(X.shape)==1:
+            return _classify(self._tree,X)
+        else:
+            results = []
+            for i in range(X.shape[0]):
+                results.append(_classify(self._tree,X[i]))
+            return np.array(results)
+
+    def show(self):
+        if self._tree==None:
+            raise NotFittedError("Estimator not fitted, call `fit` first")
+
+        #plot the tree using matplotlib
+        #import treePlotter
+        #treePlotter.createPlot(self._tree)
+
+class NotFittedError(Exception):
+    """
+    Exception class to raise if estimator is used before fitting
+    """
+    pass
+
+if __name__=='__main__':
+    #Toy data
+    X = datasets.load_iris().data
+    y = datasets.load_iris().target
+
+    X_train,X_test, y_train, y_test =  train_test_split(X,y,test_size=0.4, random_state=0)
+
+    # clf = DecisionTree(mode='ID3')
+    # clf.fit(X_train,y_train)
+    # clf.show()
+    # print(clf.predict(X_test))   
     
-# dealing with missing data    
-    #将所有缺失值？替换为Null
-    adult_data_train_df.replace('?',np.nan,inplace=True)
-
-    adult_data_test_df.replace('?',np.nan,inplace=True)    
-    #各列缺失missing data占比，或者通过df.info()粗略浏览一下
-    total = adult_data_train_df.isnull().sum().sort_values(ascending=False)
-    percent = (adult_data_train_df.isnull().sum()/adult_data_train_df.isnull().count()).sort_values(ascending=False)
-    missing_data = pd.concat([total, percent], axis=1, keys=['Total', 'Percent'])
-
-    #将每列none值替换为列值最多的值 occupation       workclass     native-country    
-
-    adult_data_train_df['workclass'].fillna(adult_data_train_df['workclass'].value_counts().sort_values(ascending=False).index[0],inplace=True)
-    adult_data_train_df['occupation'].fillna(adult_data_train_df['occupation'].value_counts().sort_values(ascending=False).index[0],inplace=True)
-    adult_data_train_df['native-country'].fillna(adult_data_train_df['native-country'].value_counts().sort_values(ascending=False).index[0],inplace=True)
-
-
-    adult_data_test_df['workclass'].fillna(adult_data_test_df['workclass'].value_counts().sort_values(ascending=False).index[0],inplace=True)
-    adult_data_test_df['occupation'].fillna(adult_data_test_df['occupation'].value_counts().sort_values(ascending=False).index[0],inplace=True)
-    adult_data_test_df['native-country'].fillna(adult_data_test_df['native-country'].value_counts().sort_values(ascending=False).index[0],inplace=True)
-
-
-    #Y值改为0或者1 
-    adult_data_train_df.loc[adult_data_train_df['income']=='<=50K','income']=0
-    adult_data_train_df.loc[adult_data_train_df['income']=='>50K','income']=1
-
-    adult_data_test_df.loc[adult_data_test_df['income']=='<=50K.','income']=0
-    adult_data_test_df.loc[adult_data_test_df['income']=='>50K.','income']=1
-    #强制转换数据类型
-    adult_data_train_df['income'] = adult_data_train_df[['income']].astype(int)
-
-    adult_data_test_df['income'] = adult_data_test_df[['income']].astype(int)
-    
-    #变量处理（特征离散化处理） 
-    ################################################################################################################# 
-    #1# 年龄 通过可视化选取最好的分界点 划分年龄区间
-    plt.figure(1)
-    facet = sns.FacetGrid(adult_data_train_df, hue="income",aspect=4)
-    facet.map(sns.kdeplot,'age',shade= True)
-    facet.set(xlim=(0, adult_data_train_df['age'].max()))
-    facet.add_legend()
-    
-    plt.figure(1)
-    average_age = adult_data_train_df[["age", "income"]].groupby(['age'],as_index=False).mean()
-    sns.barplot(x='age', y='income', data=average_age)
-
-    #年龄离散化
-    adult_data_train_df.loc[adult_data_train_df['age']<=33,'age']= 0
-    adult_data_train_df.loc[(adult_data_train_df['age']>33) & (adult_data_train_df['age']<62),'age']= 1
-    adult_data_train_df.loc[adult_data_train_df['age']>=62,'age']= 2
-
-
-    adult_data_test_df.loc[adult_data_test_df['age']<=33,'age']= 0
-    adult_data_test_df.loc[(adult_data_test_df['age']>33) & (adult_data_test_df['age']<62),'age']= 1
-    adult_data_test_df.loc[adult_data_test_df['age']>=62,'age']= 2
-
-
-    #2# workclass  哑变量处理
-    sns.factorplot('workclass','income', data=adult_data_train_df,size=8)
-
-    workclass_dummies_train  = pd.get_dummies(adult_data_train_df['workclass'],prefix='workclass')
-    workclass_dummies_train.drop(['workclass_Without-pay'], axis=1, inplace=True)
-    adult_data_train_df = adult_data_train_df.join(workclass_dummies_train)
-    adult_data_train_df.drop(['workclass'],axis =1 ,inplace =True)
-
-
-    workclass_dummies_test  = pd.get_dummies(adult_data_test_df['workclass'],prefix='workclass')
-    workclass_dummies_test.drop(['workclass_Without-pay'], axis=1, inplace=True)
-    adult_data_test_df = adult_data_test_df.join(workclass_dummies_test)
-    adult_data_test_df.drop(['workclass'],axis =1 ,inplace =True)
+    clf_ = DecisionTree(mode='C4.5')
+    clf_.fit(X,y).show()
+    print(clf_.predict(X_test))
 
     
-    #3# education  与  education_num 两列相同 留下一列即可 删除education
-    adult_data_train_df.drop(['education'],axis =1 ,inplace =True)
-
-    adult_data_test_df.drop(['education'],axis =1 ,inplace =True)
-
-
-    #4# marital-status 婚姻关系 原理类似
-    marital_dummies_train  = pd.get_dummies(adult_data_train_df['marital-status'],prefix='marital')
-    marital_dummies_train.drop(['marital_Never-married'], axis=1, inplace=True)
-    adult_data_train_df = adult_data_train_df.join(marital_dummies_train)
-    adult_data_train_df.drop(['marital-status'],axis =1 ,inplace =True) 
-
-    marital_dummies_test  = pd.get_dummies(adult_data_test_df['marital-status'],prefix='marital')
-    marital_dummies_test.drop(['marital_Never-married'], axis=1, inplace=True)
-    adult_data_test_df = adult_data_test_df.join(marital_dummies_test)
-    adult_data_test_df.drop(['marital-status'],axis =1 ,inplace =True) 
-
-    #5# occupation 工作
-    occupation_dummies_train  = pd.get_dummies(adult_data_train_df['occupation'],prefix='occupa')
-    occupation_dummies_train.drop(['occupa_Armed-Forces'], axis=1, inplace=True)
-    adult_data_train_df = adult_data_train_df.join(occupation_dummies_train)
-    adult_data_train_df.drop(['occupation'],axis =1 ,inplace =True)    
-
-    occupation_dummies_test  = pd.get_dummies(adult_data_test_df['occupation'],prefix='occupa')
-    occupation_dummies_test.drop(['occupa_Armed-Forces'], axis=1, inplace=True)
-    adult_data_test_df = adult_data_test_df.join(occupation_dummies_test)
-    adult_data_test_df.drop(['occupation'],axis =1 ,inplace =True)  
-
-    #6# relation 工作
-    relation_dummies_train  = pd.get_dummies(adult_data_train_df['relationship'],prefix='relation')
-    relation_dummies_train.drop(['relation_Own-child'], axis=1, inplace=True)
-    adult_data_train_df = adult_data_train_df.join(relation_dummies_train)
-    adult_data_train_df.drop(['relationship'],axis =1 ,inplace =True)  
-
-    relation_dummies_test  = pd.get_dummies(adult_data_test_df['relationship'],prefix='relation')
-    relation_dummies_test.drop(['relation_Own-child'], axis=1, inplace=True)
-    adult_data_test_df = adult_data_test_df.join(relation_dummies_test)
-    adult_data_test_df.drop(['relationship'],axis =1 ,inplace =True)  
-
-    #7# race 工作
-    race_dummies_train  = pd.get_dummies(adult_data_train_df['race'],prefix='race')
-    race_dummies_train.drop(['race_Other'], axis=1, inplace=True)
-    adult_data_train_df = adult_data_train_df.join(race_dummies_train)
-    adult_data_train_df.drop(['race'],axis =1 ,inplace =True)  
-
-    race_dummies_test  = pd.get_dummies(adult_data_test_df['race'],prefix='race')
-    race_dummies_test.drop(['race_Other'], axis=1, inplace=True)
-    adult_data_test_df = adult_data_test_df.join(race_dummies_test)
-    adult_data_test_df.drop(['race'],axis =1 ,inplace =True)  
-
-    #8# sex 性别
-    sex_dummies_train  = pd.get_dummies(adult_data_train_df['sex'],prefix='sex')
-    sex_dummies_train.drop(['sex_Female'], axis=1, inplace=True)
-    adult_data_train_df = adult_data_train_df.join(sex_dummies_train)
-    adult_data_train_df.drop(['sex'],axis =1 ,inplace =True)  
-
-    sex_dummies_test  = pd.get_dummies(adult_data_test_df['sex'],prefix='sex')
-    sex_dummies_test.drop(['sex_Female'], axis=1, inplace=True)
-    adult_data_test_df = adult_data_test_df.join(sex_dummies_test)
-    adult_data_test_df.drop(['sex'],axis =1 ,inplace =True)  
-    #8# country
-    country_dummies_train  = pd.get_dummies(adult_data_train_df['native-country'],prefix='country')
-    country_dummies_train.drop(['country_Outlying-US(Guam-USVI-etc)'], axis=1, inplace=True)
-    adult_data_train_df = adult_data_train_df.join(country_dummies_train)
-    adult_data_train_df.drop(['native-country'],axis =1 ,inplace =True)  
-
-    country_dummies_test  = pd.get_dummies(adult_data_test_df['native-country'],prefix='country')
-    country_dummies_test.drop(['country_Outlying-US(Guam-USVI-etc)'], axis=1, inplace=True)
-    adult_data_test_df = adult_data_test_df.join(country_dummies_test)
-    adult_data_test_df.drop(['native-country'],axis =1 ,inplace =True)  
-
-    adult_data_test_df['country_Holand-Netherlands']=0
-
-    #8# 其他连续变量归一化
-    adult_data_train_df['fnlwgt'] = feature_scaling(adult_data_train_df['fnlwgt'])
-    adult_data_train_df['capital-gain'] = feature_scaling(adult_data_train_df['capital-gain'])
-    adult_data_train_df['capital-loss'] = feature_scaling(adult_data_train_df['capital-loss'])
-    adult_data_train_df['hours-per-week'] = feature_scaling(adult_data_train_df['hours-per-week'])
-
-    adult_data_test_df['fnlwgt'] = feature_scaling(adult_data_test_df['fnlwgt'])    
-    adult_data_test_df['capital-gain'] = feature_scaling(adult_data_test_df['capital-gain'])
-    adult_data_test_df['capital-loss'] = feature_scaling(adult_data_test_df['capital-loss'])
-    adult_data_test_df['hours-per-week'] = feature_scaling(adult_data_test_df['hours-per-week'])
-    
-    #9# 特征和结果分离   
-    
-    X_train = adult_data_train_df.drop("income",axis=1)
-    Y_train = adult_data_train_df["income"]
-
-
-    X_test = adult_data_test_df.drop("income",axis=1)
-    Y_test = adult_data_test_df["income"]     
-
-# initialize linear regression parameters
-    iterations = 100
-    learning_rate = 0.001
-    l2 = 0.001
-    learning_algorithm = 'BGD'
-
-
-    classifier = LogisticRegression()
-    classifier.fit(X_train, Y_train)
-    print('parameter sklearn:',classifier.coef_)
-
-# evaluation the performance
-#各指标的含义：
-# 正确率accuracy是样本中正样本预测为正，负样本预测为负的总和比上总的样本数
-# 精确率precision是针对我们预测结果而言的，它表示的是预测为正的样本中有多少是真正的正样本
-# 召回率recall是针对我们原来的样本而言的，它表示的是样本中的正例有多少被预测正确了
-
-    scores = cross_val_score(classifier, X_train, Y_train, cv=5)  
-    print('accuracy:',np.mean(scores), scores)  
-    precisions = cross_val_score(classifier, X_train, Y_train, cv=5, scoring='precision')  
-    print('precison:', np.mean(precisions), precisions)  
-    recalls = cross_val_score(classifier, X_train, Y_train, cv=5, scoring='recall')  
-    print('recall:', np.mean(recalls), recalls)  
-
-    #综合评价指标  
-    #F1 值，是精确率和召回率的调和均值
-    f1s = cross_val_score(classifier, X_train, Y_train, cv=5, scoring='f1')  
-    print('f1:', np.mean(f1s), f1s)  
- 
-    
-    #ROC AUC  
-    #ROC曲线（Receiver Operating Characteristic，ROC curve）可以用来可视化分类器的效果。和准确率不同，ROC曲线对分类比例不平衡的数据集不敏感，ROC曲线显示的是对超过限定阈值的所有预测结果的分类器效果。ROC曲线画的是分类器的召回率与误警率（fall-out）的曲线。误警率也称假阳性率，是所有阴性样本中分类器识别为阳性的样本所占比例：  
-    #F=FP/(TN+FP) AUC是ROC曲线下方的面积，它把ROC曲线变成一个值，表示分类器随机预测的效果. from sklearn.metrics import roc_curve, auc  
-
-    predictions = classifier.predict_proba(X_test)  
-    false_positive_rate, recall, thresholds = roc_curve(Y_test, predictions[:, 1])  
-    roc_auc = auc(false_positive_rate, recall)  
-    print('roc_auc: ',roc_auc)
-    plt.title('Receiver Operating Characteristic')  
-    plt.plot(false_positive_rate, recall, 'b', label='AUC = %0.2f' % roc_auc)  
-    plt.legend(loc='lower right')  
-    plt.plot([0, 1], [0, 1], 'r--')  
-    plt.xlim([0.0, 1.0])  
-    plt.ylim([0.0, 1.0])  
-    plt.ylabel('Recall')  
-    plt.xlabel('Fall-out')  
-    plt.show()    
-
-
-
-if __name__ == "__main__":
-    main()
-
