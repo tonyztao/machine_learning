@@ -34,7 +34,7 @@ for weights in ['uniform', 'distance']:
 
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
 
-    # Put the result into a color plot
+    # Put the result into color plot
     Z = Z.reshape(xx.shape)
     plt.figure()
     plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
