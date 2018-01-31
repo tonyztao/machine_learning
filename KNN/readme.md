@@ -36,9 +36,9 @@ k值通常是采用交叉检验来确定（以k=1为基准），从K=1开始，�
 #### K近邻的实现方法 —— kd树
 
 #### 代码实现
-[KNN的Sklearn实现](https://www.cnblogs.com/zy230530/p/6780836.html)
+[KNN的Sklearn实现](https://github.com/tonyztao/machine_learning/blob/master/KNN/knn_sklearn.py)
 
-[KNN的Python实现](https://www.cnblogs.com/zy230530/p/6780836.html)
+[KNN的Python实现](https://github.com/tonyztao/machine_learning/blob/master/KNN/knn.py)
 
 #### 参考文献
 [机器学习实战之kNN算法](https://www.cnblogs.com/zy230530/p/6780836.html) 
