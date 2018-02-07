@@ -17,8 +17,8 @@ $P(class|feature)=\frac{P(feature|class)P(class)}{P(feature)}$
 
 #### 原理与流程
 朴素贝叶斯方法进行分类的流程如下：
-1. 设$x = \left{ a_{1},a_{2},...,a_{m}\right\}$为一个待分类项，而每个$a$为$x$的一个特征属性。
-2. 有类别集合$C = \left{ y_{1},y_{2},...,y_{n}\right\}$
+1. 设$x = \left\{ a_{1},a_{2},...,a_{m}\right\}$为一个待分类项，而每个$a$为$x$的一个特征属性。
+2. 有类别集合$C = \left\{ y_{1},y_{2},...,y_{n}\right\}$
 3. 计算$P(y_{1}|x),P(y_{2}|x),...,P(y_{n}|x)$
 4. 如果$P(y_{k}|x) = max(P(y_{1}|x),P(y_{2}|x),...,P(y_{n}|x))$,则$x \in y_{k}$
 
