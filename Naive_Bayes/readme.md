@@ -17,8 +17,8 @@ $P(class|feature)=\frac{P(feature|class)P(class)}{P(feature)}$
 
 #### 原理与流程
 朴素贝叶斯方法进行分类的流程如下：
-1. 设$x=\left\{a_{1},a_{2},...,a_{m}\right\}$为一个待分类项，而每个$a$为$x$的一个特征属性。
-2. 有类别集合$C=\left\{y_{1},y_{2},...,y_{n}\right\}$
+1. 设$x = \left\{ a_{1},a_{2},...,a_{m}\right\}$为一个待分类项，而每个$a$为$x$的一个特征属性。
+2. 有类别集合$C = \left\{ y_{1},y_{2},...,y_{n}\right\}$
 3. 计算$P(y_{1}|x),P(y_{2}|x),...,P(y_{n}|x)$
 4. 如果$P(y_{k}|x) = max(P(y_{1}|x),P(y_{2}|x),...,P(y_{n}|x))$,则$x \in y_{k}$
 
@@ -73,9 +73,11 @@ P(身高|性别) x P(体重|性别) x P(脚掌|性别) x P(性别)
 ### 代码实现
 当给定训练集时，我们无非就是先计算出所有的先验概率和条件概率，然后把它们存起来（当成一个查找表）。当来一个测试样本时，我们就计算它所有可能的后验概率，最大的那个对应的就是测试样本的类别，而后验概率的计算无非就是在查找表里查找需要的值。  
 
-[Naive Bayes的Sklearn实现](https://github.com/tonyztao/machine_learning/blob/master/KNN/knn_sklearn.py)
+[Naive Bayes的Sklearn实现](https://github.com/tonyztao/machine_learning/blob/master/Naive_Bayes/Naive_Bayes_Sklearn_Iris_Classification.py)
 
-[Naive Bayes的Python实现](https://github.com/tonyztao/machine_learning/blob/master/KNN/knn.py)
+[Naive Bayes的Python实现](https://github.com/tonyztao/machine_learning/blob/master/Naive_Bayes/Naive_Bayes.py)
+
+[Naive Bayes的Kaggle实例](https://github.com/tonyztao/machine_learning/blob/master/Naive_Bayes/Naive_Bayes_Kaggle.py)
 
 ### 参考文献
 [算法杂货铺——分类算法之朴素贝叶斯分类](http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html)  
