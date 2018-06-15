@@ -9,4 +9,5 @@
 | KNN       | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/KNN)|
 | Naive_Bayes | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/Naive_Bayes)|
 | SVM | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/SVM)|
+| neutral_network | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/neural_network)|
 | ensemble_method | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/ensemble_method)|
