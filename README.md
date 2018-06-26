@@ -11,3 +11,5 @@
 | SVM | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/SVM)|
 | neutral_network | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/neural_network)|
 | ensemble_method | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/ensemble_method)|
+| feature_engineering | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/feature_engineer)|
+| titanic_example | [[dir]](https://github.com/tonyztao/machine_learning/tree/master/titantic_example)|
